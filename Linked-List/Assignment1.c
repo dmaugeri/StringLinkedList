@@ -29,4 +29,6 @@ int main(int argc, char *argv[])
     PrintString(&S2);           //Should print CBD
     CopyString(&S1, 2,1,3, &S2);    //S1: is CCBDBD and S2 is unchanged
     PrintString(&S1);           //Should print CCBDBD
+    DeleteString(2,4,&S1);      //Should delete the string CBD within CCBDBD
+    PrintString(&S1);           //Should print out CBD
 }

@@ -64,7 +64,6 @@ int InsertString(String *X, int Pos, String *S)
         char c;
         GetChar(&c,i+1,X);
         InsertChar(c,Pos+i,S);
-        printf("%d\n",Pos+i);
     }
     return 1;
 }
@@ -111,12 +110,13 @@ int CopyString(String *X, int Pos, int start, int end, String *S)
         return 0;
     }
     int i;
-
+    //+1 for 1 based indexing
     for(i = 0; i < end - start + 1 ; ++i) {
         char c;
         GetChar(&c,start+i,S);
         InsertChar(c,Pos+i,X);
     }
+    return 1;
 }
 //Deletes character at position Pos in String S
 int DeleteChar(int Pos, String *S)
@@ -138,14 +138,35 @@ int DeleteChar(int Pos, String *S)
         for(i = 0; i < Pos-2; ++i) {
             middle = middle->next;
         }
+        tmp = middle->next;
+        free(middle->next);
+        middle->next = tmp->next;
     } 
     return 1;
 }
-
-
-int DeteString(int first, int last, String *S)
+//Deletes from character first to last in String S (inclusive)
+int DeleteString(int first, int last, String *S)
 {
+    int lengthS = Length(S);
 
+    if(first > lengthS || first < 1) {
+        fprintf(stderr, "Invalid first position");
+        return 0;
+    } else if(last < 1 || last > lengthS) {
+        fprintf(stderr, "Invalid last position");
+        return 0;
+    } else if(first > last) {
+        fprintf(stderr, "First position cannot be greater than last position");
+        return 0;
+    }
+    int i;
+
+    for(i = first; i <= last; ++i) {
+        DeleteChar(first,S);
+        //printf("%d\n",i);
+    } 
+    return 1;
+    
 }
 
 //prints string S
