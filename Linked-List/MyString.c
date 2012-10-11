@@ -6,7 +6,7 @@ int Initialize(String *S)
 {
     S->head = NULL;
 }
-
+//Calculates the length of String S
 int Length(String *S)
 {
     int length=0;
@@ -22,13 +22,14 @@ int Length(String *S)
     return length;
 }
 
+//Inserts character X, at position Pos in String S
 int InsertChar(char X, int Pos, String *S)
 {
     int length = Length(S); 
 
     if(Pos < 1 || Pos > length + 1){
         fprintf(stderr, "The position does not exist\n");
-        return 1;
+        return 0;
     }
     //alocates memory for new node 
     StringNode *new = (StringNode *)malloc(sizeof(StringNode));
@@ -49,21 +50,32 @@ int InsertChar(char X, int Pos, String *S)
         middle->next = new;
     }
 
-    return 0;
+    return 1;
 }
-
+//Inserts String X into String S, String X is  unchanged
 int InsertString(String *X, int Pos, String *S)
 {
-
-
+    if(Pos < 1 || Pos > Length(S)+1) {
+        fprintf(stderr,"Invalid position");
+        return 0;
+    }
+    int i;
+    for(i = 0; i < Length(X);++i) {
+        char c;
+        GetChar(&c,i+1,X);
+        InsertChar(c,Pos+i,S);
+        printf("%d\n",Pos+i);
+    }
+    return 1;
 }
 
+//Puts the character found at position Pos in String S into C
 int GetChar(char *C, int Pos, String *S)
 {
     int length = Length(S);
     if(Pos < 1 || Pos > length) {
         fprintf(stderr,"No letter at that position\n");
-        return 1;
+        return 0;
     }
 
     if(Pos == 1) {
@@ -76,20 +88,43 @@ int GetChar(char *C, int Pos, String *S)
         }
         *C = middle->data;
     }
-    return 0;
+    return 1;
 }
-
+//Copies a substring of S into position Pos of string X. The substring is the substring of S from position start
+//to position end inclusive. S is unchanced.
 int CopyString(String *X, int Pos, int start, int end, String *S)
 {
+    int lengthS = Length(S);
+    int lengthX = Length(X)+1;
 
+    if(Pos < 1 || Pos > lengthX) {
+        fprintf(stderr, "Invalid position");
+        return 0;
+    } else if(start < 1 || start > lengthS) {
+        fprintf(stderr, "Invalid start position");
+        return 0;
+    } else if(end > lengthS || end < 1) {
+        fprintf(stderr, "Invalid end position");
+        return 0;
+    } else if(start > end) {
+        fprintf(stderr, "end cannot be greater then start");
+        return 0;
+    }
+    int i;
+
+    for(i = 0; i < end - start + 1 ; ++i) {
+        char c;
+        GetChar(&c,start+i,S);
+        InsertChar(c,Pos+i,X);
+    }
 }
-
+//Deletes character at position Pos in String S
 int DeleteChar(int Pos, String *S)
 {
     int length = Length(S);
     if(Pos < 1 || Pos > length) {
         fprintf(stderr,"No letter at that position\n");
-        return 1;
+        return 0;
     }
     StringNode *tmp = S->head;
 
@@ -104,13 +139,16 @@ int DeleteChar(int Pos, String *S)
             middle = middle->next;
         }
     } 
+    return 1;
 }
+
 
 int DeteString(int first, int last, String *S)
 {
 
 }
 
+//prints string S
 int PrintString(String *S)
 {
     StringNode *tmp = S->head;
@@ -119,5 +157,5 @@ int PrintString(String *S)
         tmp = tmp->next;
     }
     printf("\n");
-    return 0;
+    return 1;
 }
