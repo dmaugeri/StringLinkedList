@@ -163,7 +163,6 @@ int DeleteString(int first, int last, String *S)
 
     for(i = first; i <= last; ++i) {
         DeleteChar(first,S);
-        //printf("%d\n",i);
     } 
     return 1;
     
