@@ -5,6 +5,7 @@
 int Initialize(String *S)
 {
     S->head = NULL;
+    return 1;
 }
 //Calculates the length of String S
 int Length(String *S)
