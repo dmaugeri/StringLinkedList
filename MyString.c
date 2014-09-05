@@ -138,6 +138,7 @@ int DeleteChar(int Pos, String *S)
         int i;
         for(i = 0; i < Pos-2; ++i) {
             middle = middle->next;
+            printf("data: %c\n", middle->data);
         }
         tmp = middle->next->next;
         free(middle->next);
