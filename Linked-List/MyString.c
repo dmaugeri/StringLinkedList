@@ -139,9 +139,9 @@ int DeleteChar(int Pos, String *S)
         for(i = 0; i < Pos-2; ++i) {
             middle = middle->next;
         }
-        tmp = middle->next;
+        tmp = middle->next->next;
         free(middle->next);
-        middle->next = tmp->next;
+        middle->next = tmp;
     } 
     return 0;
 }
