@@ -61,7 +61,8 @@ int InsertString(String *X, int Pos, String *S)
         return 1;
     }
     int i;
-    for(i = 0; i < Length(X);++i) {
+    int length = Length(X);
+    for(i = 0; i < length;++i) {
         char c;
         GetChar(&c,i+1,X);
         InsertChar(c,Pos+i,S);
